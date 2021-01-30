@@ -169,7 +169,7 @@ int osip_via_parse(osip_via_t *via, const char *hvalue) {
     while (0 == strncmp(host, " ", 1)) {
       host++;
 
-      if (strlen(host) == 1)
+      if (strlen(host) <= 1)
         return OSIP_SYNTAXERROR; /* via is malformed */
     }
 
