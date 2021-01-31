@@ -375,6 +375,9 @@ int osip_uri_parse_headers(osip_uri_t *url, const char *headers) {
   const char *_and;
   const char *equal;
 
+  if (headers[0] != '?') /* This API can only be used with a starting '?' char */
+    return OSIP_SYNTAXERROR;
+
   /* find '=' wich is the separator for one header */
   /* find ';' wich is the separator for multiple headers */
 
@@ -461,6 +464,9 @@ int osip_uri_parse_params(osip_uri_t *url, const char *params) {
 
   const char *comma;
   const char *equal;
+
+  if (params[0] != '?') /* This API can only be used with a starting '?' char */
+    return OSIP_SYNTAXERROR;
 
   /* find '=' wich is the separator for one param */
   /* find ';' wich is the separator for multiple params */
