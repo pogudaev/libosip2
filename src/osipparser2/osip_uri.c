@@ -465,7 +465,7 @@ int osip_uri_parse_params(osip_uri_t *url, const char *params) {
   const char *comma;
   const char *equal;
 
-  if (params[0] != '?') /* This API can only be used with a starting '?' char */
+  if (params[0] != ';') /* This API can only be used with a starting '?' char */
     return OSIP_SYNTAXERROR;
 
   /* find '=' wich is the separator for one param */
