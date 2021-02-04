@@ -140,7 +140,13 @@ void *_osip_realloc(void *ptr, size_t size, char *file, unsigned short line);
 
 #else
 
-#if 0 /* for windows test purpose */
+/* Check for memory leaks */
+#if defined(_DEBUG) && defined(WIN32)
+#define OSIP_MEMORY_DEBUG
+#endif
+
+#ifdef OSIP_MEMORY_DEBUG
+/* for windows test purpose */
 #ifndef osip_malloc
 #define osip_malloc(S) _osip_malloc(S, __FILE__, __LINE__)
 #endif
