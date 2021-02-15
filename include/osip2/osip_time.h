@@ -62,6 +62,20 @@ void min_timercmp(struct timeval *tv1, struct timeval *tv2);
 #define osip_timerclear(tvp) timerclear(tvp)
 #endif
 
+#if !defined(timersub)
+#define osip_timersub(a, b, result)                  \
+  do {                                               \
+    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;    \
+    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec; \
+    if ((result)->tv_usec < 0) {                     \
+      --(result)->tv_sec;                            \
+      (result)->tv_usec += 1000000;                  \
+    }                                                \
+  } while (0)
+#else
+#define osip_timersub(a, b, result) timersub(a, b, result)
+#endif
+
 int osip_gettimeofday(struct timeval *tp, void *tz);
 time_t osip_getsystemtime(time_t *t);
 void osip_compensatetime(void);
