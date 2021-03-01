@@ -362,4 +362,5 @@ const char *osip_strerror(int err);
 #define OSIP_TOOMUCHCALL -51
 #define OSIP_WRONG_FORMAT -52
 #define OSIP_NOCOMMONCODEC -53
+#define OSIP_RETRY_LIMIT -60
 #endif /* _PORT_H_ */
