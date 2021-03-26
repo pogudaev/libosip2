@@ -194,16 +194,15 @@ time_t time(time_t *t) {
 #endif
 
 void osip_compensatetime() {
+#ifndef ANDROID
+  return;
+#else
   static struct timeval last_now_monotonic = {0, 0};
   static struct timeval last_now_real = {0, 0};
   struct timeval now_monotonic;
   struct timeval now_real;
   struct timeval diff_monotonic;
   struct timeval diff_real;
-
-#ifndef ANDROID
-  return;
-#endif
 
   _osip_gettimeofday_realtime(&now_real, NULL);
   osip_gettimeofday(&now_monotonic, NULL);
@@ -243,6 +242,7 @@ void osip_compensatetime() {
   _osip_gettimeofday_realtime(&last_now_real, NULL);
   osip_gettimeofday(&last_now_monotonic, NULL);
   last_now_monotonic.tv_sec -= offset.tv_sec;
+#endif
 }
 
 time_t osip_getsystemtime(time_t *t) {
