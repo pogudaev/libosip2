@@ -1,3 +1,7 @@
+sip:antisip@sip.antisip.com;?subject=spamming
+sip:antisip@sip.antisip.com;=?subject=spamming
+sip:antisip@sip.antisip.com;a=?subject=spamming
+sip:antisip@sip.antisip.com;a=b?subject=spamming
 <sip:kubi6@>
 sip:kubi6@
 sip:alice@example.org;lr
