@@ -1,3 +1,14 @@
+libosip2 (5.2.1) - 2021-05-25
+	* fix compilation warning on ANDROID
+	* add OSIP_RETRY_LIMIT which may be useful to exosip
+	* add osip_timersub macro
+	* [windows] automatic usage of debug malloc/free to ease leak detection on windows
+	* fix validate that the API are used with the expected/required leading char
+	  osip_uri_parse_headers parameter must start by '?'
+	  osip_uri_parse_params parameter must start by ';'
+	* fix memory out-of-bound access in broken uncompliant Via header
+	* fix k= within media being rejected since 5.1.1 [wrong check]
+
 libosip2 (5.2.0) - 2020-11-10
 	* use localtime_r when __USE_POSIX is available
 	* sync versions with libexosip

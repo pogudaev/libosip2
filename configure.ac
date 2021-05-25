@@ -1,15 +1,15 @@
 AC_PREREQ([2.69])
-AC_INIT([libosip2],[5.2.0])
+AC_INIT([libosip2],[5.2.1])
 AC_CONFIG_SRCDIR([include/osip2/osip.h])
 
 AC_MSG_NOTICE([libosip2                The GNU Open SIP library.])
-AC_MSG_NOTICE([Copyright (C) 2001-2020 Aymeric MOIZARD - <amoizard@antisip.com>])
+AC_MSG_NOTICE([Copyright (C) 2001-2021 Aymeric MOIZARD - <amoizard@antisip.com>])
 
 #‘current[:revision[:age]]’. So, passing -version-info 3:12:1 sets current to 3, revision to 12, and age to 1
 # 1/ increase revision for every source code change [release]
 # 2/ increase current for every API/ABI change and revert revision to 0
 # 3/ always set age to 0 (for public release)
-AC_SUBST(LIBOSIP_SO_VERSION, 14:0:0)
+AC_SUBST(LIBOSIP_SO_VERSION, 14:1:0)
 AC_SUBST(OSIP_VERSION, $VERSION)
 
 AC_MSG_RESULT([Configuring ${PACKAGE} ${VERSION}])
