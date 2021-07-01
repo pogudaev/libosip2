@@ -2039,7 +2039,10 @@ static int sdp_append_media(char **string, int *size, char *tmp, sdp_media_t *me
   tmp = __osip_sdp_append_string(string, size, tmp, "m=");
   tmp = __osip_sdp_append_string(string, size, tmp, media->m_media);
   tmp = __osip_sdp_append_string(string, size, tmp, " ");
-  tmp = __osip_sdp_append_string(string, size, tmp, media->m_port);
+  if (media->m_port[0] == '0')
+    tmp = __osip_sdp_append_string(string, size, tmp, "0");
+  else
+    tmp = __osip_sdp_append_string(string, size, tmp, media->m_port);
 
   if (media->m_number_of_port != NULL) {
     tmp = __osip_sdp_append_string(string, size, tmp, "/");
