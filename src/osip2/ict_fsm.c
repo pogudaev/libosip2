@@ -153,9 +153,13 @@ void osip_ict_timeout_b_event(osip_transaction_t *ict, osip_event_t *evt) {
   ict->ict_context->timer_b_length = -1;
   ict->ict_context->timer_b_start.tv_sec = -1;
 
-  __osip_message_callback(OSIP_ICT_STATUS_TIMEOUT, ict, evt->sip);
-  __osip_transaction_set_state(ict, ICT_TERMINATED);
-  __osip_kill_transaction_callback(OSIP_ICT_KILL_TRANSACTION, ict);
+  if (ict->out_socket == -999) {
+    ict_handle_transport_error(ict, -1);
+  } else {
+    __osip_message_callback(OSIP_ICT_STATUS_TIMEOUT, ict, evt->sip);
+    __osip_transaction_set_state(ict, ICT_TERMINATED);
+    __osip_kill_transaction_callback(OSIP_ICT_KILL_TRANSACTION, ict);
+  }
 }
 
 void ict_rcv_1xx(osip_transaction_t *ict, osip_event_t *evt) {
