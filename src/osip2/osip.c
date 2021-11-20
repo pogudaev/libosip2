@@ -1663,6 +1663,7 @@ void __osip_kill_transaction_callback(int type, osip_transaction_t *tr) {
   }
 
   tr->completed_time = osip_getsystemtime(NULL);
+  osip_gettimeofday(&tr->destroyed_time, NULL);
 
   if (config->kill_callbacks[type] == NULL)
     return;

@@ -169,14 +169,15 @@ typedef enum osip_fsm_type_t {
 #endif
 #ifndef DEFAULT_T1_TCP_PROGRESS
 /**
+ * [OBSOLETE]
  * You can re-define the default value for T1_TCP_PROGRESS.
  * This is a trick to use non blocking socke for reliable protocol
  * On first attempt, the connection is not ready and the next
  * osip retransmission are used to check the progress of the connection
  * in order to send the message.
- * The default value is 50ms.
+ * The default value is 500ms.
  */
-#define DEFAULT_T1_TCP_PROGRESS 250 /* 50ms */
+#define DEFAULT_T1_TCP_PROGRESS 500 /* 500ms */
 #endif
 #ifndef DEFAULT_T2
 /**
@@ -379,6 +380,8 @@ struct osip_transaction {
 
   time_t birth_time;     /**< birth date of transaction        */
   time_t completed_time; /**< end   date of transaction        */
+  struct timeval created_time;   /**< created time of transaction */
+  struct timeval destroyed_time; /**< destroyed time of transaction */
 
   int in_socket;  /**< Optional socket for incoming message */
   int out_socket; /**< Optional place for outgoing message */
