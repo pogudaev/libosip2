@@ -132,9 +132,20 @@ void osip_nict_timeout_e_event(osip_transaction_t *nict, osip_event_t *evt) {
 
   /* reset timer */
   if (nict->state == NICT_TRYING) {
-    if (nict->nict_context->timer_e_length < DEFAULT_T1)
-      nict->nict_context->timer_e_length = nict->nict_context->timer_e_length + DEFAULT_T1_TCP_PROGRESS;
+    struct timeval now;
+    struct timeval duration;
+    long elapsed;
 
+    osip_gettimeofday(&now, NULL);
+    osip_timersub(&now, &nict->created_time,  &duration);
+    elapsed = duration.tv_sec * 1000 + duration.tv_usec / 1000;
+
+    if (elapsed < DEFAULT_T1)
+      nict->nict_context->timer_e_length = DEFAULT_T1;
+    else if (elapsed < 2 * DEFAULT_T1)
+      nict->nict_context->timer_e_length = 2 * DEFAULT_T1;
+    else if (elapsed < 4 * DEFAULT_T1)
+      nict->nict_context->timer_e_length = 4 * DEFAULT_T1;
     else
       nict->nict_context->timer_e_length = nict->nict_context->timer_e_length * 2;
 
@@ -196,9 +207,13 @@ void osip_nict_timeout_f_event(osip_transaction_t *nict, osip_event_t *evt) {
   nict->nict_context->timer_f_length = -1;
   nict->nict_context->timer_f_start.tv_sec = -1;
 
-  __osip_message_callback(OSIP_NICT_STATUS_TIMEOUT, nict, evt->sip);
-  __osip_transaction_set_state(nict, NICT_TERMINATED);
-  __osip_kill_transaction_callback(OSIP_NICT_KILL_TRANSACTION, nict);
+  if (nict->out_socket == -999) {
+    nict_handle_transport_error(nict, -1);
+  } else {
+    __osip_message_callback(OSIP_NICT_STATUS_TIMEOUT, nict, evt->sip);
+    __osip_transaction_set_state(nict, NICT_TERMINATED);
+    __osip_kill_transaction_callback(OSIP_NICT_KILL_TRANSACTION, nict);
+  }
 }
 
 void osip_nict_timeout_k_event(osip_transaction_t *nict, osip_event_t *evt) {

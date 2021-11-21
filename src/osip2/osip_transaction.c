@@ -136,7 +136,7 @@ int osip_transaction_init(osip_transaction_t **transaction, osip_fsm_type_t ctx_
   memset(*transaction, 0, sizeof(osip_transaction_t));
 
   (*transaction)->birth_time = osip_getsystemtime(NULL);
-
+  osip_gettimeofday(&((*transaction)->created_time), NULL);
   osip_id_mutex_lock(osip);
   (*transaction)->transactionid = osip->transactionid++;
   osip_id_mutex_unlock(osip);
