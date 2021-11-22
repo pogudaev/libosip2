@@ -1,3 +1,11 @@
+libosip2 (5.3.0) - 2021-11-22
+        * STRUCTURE change: struct osip_transaction
+
+	* CHANGE: if out_socket contains -999 and timer_b or timer_f fires, the transaction will report a transport-error
+
+        * improve TIMER_E to avoid high interval after DNS or socket events
+	* when port number starts with 0, just put 0 and discard other char [no op in practice]
+
 libosip2 (5.2.1) - 2021-05-25
 	* fix compilation warning on ANDROID
 	* add OSIP_RETRY_LIMIT which may be useful to exosip
